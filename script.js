@@ -577,223 +577,119 @@ function displayCartItems() {
 // Обновление сводки заказа
 function updateOrderSummary() {
     if (cart.length === 0) {
-        orderSummary.innerHTML = '<p>Корзина пуста. Добавьте товары для оформления заказа.</p>';
+        orderSummary.innerHTML = '<p class="empty-cart-message">Корзина пуста. Добавьте товары для оформления заказа.</p>';
         return;
     }
     
-    let summaryHTML = '<h4>Ваш заказ:</h4>';
+    let summaryHTML = '<h4><i class="fas fa-shopping-bag"></i> Ваш заказ:</h4>';
     let total = 0;
+    let itemsText = '';
     
-    cart.forEach(item => {
+    cart.forEach((item, index) => {
         const itemTotal = item.price * item.quantity;
         total += itemTotal;
         
         summaryHTML += `
             <div class="summary-item">
-                <span>${item.name} × ${item.quantity}</span>
-                <span>${itemTotal.toLocaleString('ru-RU')} ₽</span>
+                <div class="summary-item-name">
+                    <span class="item-name">${item.name}</span>
+                    <span class="item-quantity">× ${item.quantity}</span>
+                </div>
+                <span class="item-total">${itemTotal.toLocaleString('ru-RU')} ₽</span>
             </div>
         `;
+        
+        // Формируем текстовое описание для скрытого поля
+        itemsText += `${item.name} (${item.quantity} шт.) - ${itemTotal.toLocaleString('ru-RU')} ₽`;
+        if (index < cart.length - 1) itemsText += '\n';
     });
     
     summaryHTML += `
         <div class="summary-total">
-            <span>Итого:</span>
-            <span>${total.toLocaleString('ru-RU')} ₽</span>
+            <span>Итого к оплате:</span>
+            <span class="total-amount">${total.toLocaleString('ru-RU')} ₽</span>
         </div>
     `;
     
     orderSummary.innerHTML = summaryHTML;
+    
+    // Обновляем скрытые поля
+    if (orderItems) orderItems.value = itemsText;
+    if (orderTotal) orderTotal.value = `${total.toLocaleString('ru-RU')} ₽`;
+    if (orderDate) orderDate.value = new Date().toLocaleString('ru-RU');
 }
 
-// Уведомления
-function showNotification(message, type = 'success') {
-    const notification = document.createElement('div');
-    notification.className = `notification ${type}`;
-    notification.innerHTML = `
-        <div class="notification-icon">
-            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
-        </div>
-        <div class="notification-content">
-            <div class="notification-title">${type === 'success' ? 'Успешно!' : 'Ошибка'}</div>
-            <div class="notification-message">${message}</div>
-        </div>
-    `;
+// Обработка отправки формы через Formspree
+orderForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
     
-    notificationContainer.appendChild(notification);
+    if (cart.length === 0) {
+        showNotification('Добавьте товары в корзину', 'error');
+        return;
+    }
     
-    setTimeout(() => {
-        notification.style.opacity = '0';
-        notification.style.transform = 'translateX(100%)';
-        setTimeout(() => notification.remove(), 300);
-    }, 3000);
-}
-
-// Отправка заказа
-async function submitOrder(formData) {
+    const submitBtn = orderForm.querySelector('.btn-submit');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
+    submitBtn.disabled = true;
+    
     try {
-        const response = await fetch('https://formspree.io/f/mzbldppo', {
+        showNotification('Отправляем ваш заказ...', 'success');
+        
+        // Для отладки - посмотрим что отправляем
+        const formData = new FormData(orderForm);
+        console.log('FormData содержимое:');
+        for (let [key, value] of formData.entries()) {
+            console.log(key + ': ' + value);
+        }
+        
+        // Отправляем форму
+        const response = await fetch(orderForm.action, {
             method: 'POST',
+            body: formData,
             headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                ...formData,
-                _subject: `Новый заказ от ${formData.name}`,
-                _replyto: formData.email
-            })
+                'Accept': 'application/json'
+            }
         });
         
-        return { success: response.ok };
+        const result = await response.json();
+        
+        if (response.ok) {
+            showNotification('✅ Заказ успешно отправлен! Мы свяжемся с вами в течение часа.', 'success');
+            
+            // Очищаем корзину
+            cart = [];
+            saveCart();
+            updateCartCount();
+            displayCartItems();
+            
+            // Закрываем модальное окно
+            checkoutModal.classList.remove('active');
+            
+            // Сбрасываем форму
+            orderForm.reset();
+            
+        } else {
+            console.error('Formspree error:', result);
+            let errorMessage = 'Ошибка отправки заказа';
+            
+            if (result.errors && result.errors.length > 0) {
+                errorMessage = result.errors[0].message;
+            } else if (result.error) {
+                errorMessage = result.error;
+            }
+            
+            showNotification('❌ ' + errorMessage, 'error');
+        }
         
     } catch (error) {
-        console.error('Ошибка отправки:', error);
-        return { success: false };
+        console.error('Network error:', error);
+        showNotification('❌ Ошибка соединения с интернетом', 'error');
+    } finally {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
     }
-}
-
-// Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', () => {
-    // Обработка кликов по категориям
-    categoryItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
-            
-            const categoryId = item.getAttribute('data-category');
-            
-            // Обновляем активную категорию
-            updateActiveCategory(categoryId);
-            
-            // Прокручиваем к категории
-            if (categoryId === 'all') {
-                // Прокручиваем к началу каталога
-                document.getElementById('products').scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            } else {
-                scrollToCategory(categoryId);
-            }
-        });
-    });
-    
-    // Отображение товаров
-    displayAllProducts();
-    displayProductsByCategory();
-    updateCartCount();
-    
-    // Обновляем иконку в шапке
-    cartBtn.innerHTML = `
-        <i class="fas fa-shopping-bag"></i>
-        <span class="cart-count" id="cartCount">0</span>
-    `;
-    
-    // Открытие корзины
-    cartBtn.addEventListener('click', () => {
-        cartModal.classList.add('active');
-        displayCartItems();
-    });
-    
-    // Закрытие корзины
-    closeCart.addEventListener('click', () => {
-        cartModal.classList.remove('active');
-    });
-    
-    cartOverlay.addEventListener('click', () => {
-        cartModal.classList.remove('active');
-    });
-    
-    // Оформление заказа
-    checkoutBtn.addEventListener('click', () => {
-        if (cart.length === 0) {
-            showNotification('Добавьте товары в корзину', 'error');
-            return;
-        }
-        
-        cartModal.classList.remove('active');
-        checkoutModal.classList.add('active');
-        updateOrderSummary();
-    });
-    
-    // Закрытие оформления заказа
-    closeCheckout.addEventListener('click', () => {
-        checkoutModal.classList.remove('active');
-    });
-    
-    checkoutOverlay.addEventListener('click', () => {
-        checkoutModal.classList.remove('active');
-    });
-    
-    // Закрытие модального окна товара
-    productOverlay.addEventListener('click', () => {
-        productModal.classList.remove('active');
-    });
-    
-    // Мобильное меню
-    mobileMenuBtn.addEventListener('click', () => {
-        mobileMenu.classList.add('active');
-    });
-    
-    closeMenuBtn.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-    });
-    
-    // Мобильные ссылки
-    document.querySelectorAll('.mobile-nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-        });
-    });
-    
-    // Отправка формы заказа
-    orderForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        if (cart.length === 0) {
-            showNotification('Корзина пуста', 'error');
-            return;
-        }
-        
-        const formData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
-            address: document.getElementById('address').value,
-            comments: document.getElementById('comments').value || 'Нет комментариев',
-            cart: cart,
-            total: cart.reduce((total, item) => total + (item.price * item.quantity), 0),
-            orderDate: new Date().toLocaleString('ru-RU')
-        };
-        
-        const submitBtn = orderForm.querySelector('.btn-submit');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
-        submitBtn.disabled = true;
-        
-        try {
-            const result = await submitOrder(formData);
-            
-            if (result.success) {
-                showNotification('Заказ успешно отправлен! Мы свяжемся с вами в течение часа.', 'success');
-                
-                cart = [];
-                saveCart();
-                updateCartCount();
-                displayCartItems();
-                
-                checkoutModal.classList.remove('active');
-                orderForm.reset();
-                
-            } else {
-                showNotification('Ошибка при отправке заказа. Попробуйте позже.', 'error');
-            }
-        } catch (error) {
-            showNotification('Ошибка соединения', 'error');
-        } finally {
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-        }
-    });
+});
     
     // Плавная прокрутка
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -844,7 +740,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Инициализация видимости меню категорий при загрузке
     setTimeout(handleCategoriesVisibility, 100);
-});
 
 // Глобальные функции
 window.viewProduct = viewProduct;
