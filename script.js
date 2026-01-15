@@ -1,11 +1,11 @@
-// Данные товаров с категориями
+// Данные товаров с категориями (используем Imgur для GitHub Pages)
 const products = [
     {
         id: 1,
         name: "Резная деревянная шкатулка",
         description: "Изящная шкатулка из массива дуба с ручной резьбой. Идеально для хранения украшений и памятных вещей.",
         price: 4290,
-        images: ['https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'],
+        images: ['https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'],
         specs: {
             "Материал": "Массив дуба",
             "Размер": "20×15×10 см",
@@ -21,7 +21,7 @@ const products = [
         name: "Деревянная разделочная доска",
         description: "Практичная и стильная разделочная доска из ясеня с уникальной текстурой дерева.",
         price: 1890,
-        images: ['https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'],
+        images: ['https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'],
         specs: {
             "Материал": "Ясень",
             "Размер": "35×25×2 см",
@@ -37,7 +37,7 @@ const products = [
         name: "Рамка для фото из ореха",
         description: "Элегантная рамка для фотографий из натурального ореха. Подчеркнёт важные моменты вашей жизни.",
         price: 2490,
-        images: ['https://images.unsplash.com/photo-1514228742587-6b1558fcf93a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'],
+        images: ['https://images.unsplash.com/photo-1514228742587-6b1558fcf93a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'],
         specs: {
             "Материал": "Грецкий орех",
             "Размер": "21×30 см",
@@ -53,7 +53,7 @@ const products = [
         name: "Деревянная подставка для ножей",
         description: "Удобная и безопасная подставка для ножей из массива бука. Сохранит остроту лезвий.",
         price: 3290,
-        images: ['https://images.unsplash.com/photo-1590736969956-6d9c2a8d6977?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'],
+        images: ['https://images.unsplash.com/photo-1590736969956-6d9c2a8d6977?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'],
         specs: {
             "Материал": "Бук",
             "Размер": "25×12×8 см",
@@ -68,7 +68,7 @@ const products = [
         name: "Набор деревянных ложек",
         description: "Набор из 5 ложек разного размера из вишни. Идеально для приготовления и сервировки.",
         price: 1590,
-        images: ['https://images.unsplash.com/photo-1485955900006-10f4d324d411?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'],
+        images: ['https://images.unsplash.com/photo-1485955900006-10f4d324d411?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'],
         specs: {
             "Материал": "Вишня",
             "Количество": "5 шт",
@@ -84,7 +84,7 @@ const products = [
         name: "Деревянная полка для специй",
         description: "Компактная полка для специй из берёзы. Организуйте пространство на кухне с помощью натурального дерева.",
         price: 2890,
-        images: ['https://images.unsplash.com/photo-1556228720-195a672e8a03?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'],
+        images: ['https://images.unsplash.com/photo-1556228720-195a672e8a03?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'],
         specs: {
             "Материал": "Берёза",
             "Размер": "40×15×15 см",
@@ -99,7 +99,7 @@ const products = [
         name: "Деревянная тетрадь с обложкой из кожи",
         description: "Эксклюзивная тетрадь с деревянными страницами и кожаной обложкой. Идеально для записей и скетчей.",
         price: 1890,
-        images: ['https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'],
+        images: ['https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'],
         specs: {
             "Материал": "Берёза, натуральная кожа",
             "Размер": "А5 (15×21 см)",
@@ -115,7 +115,7 @@ const products = [
         name: "Деревянная ключница с крючками",
         description: "Стильная ключница из ореха с 4 крючками. Сохранит порядок и добавит уюта прихожей.",
         price: 2190,
-        images: ['https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'],
+        images: ['https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'],
         specs: {
             "Материал": "Орех, латунь",
             "Размер": "20×15×3 см",
@@ -131,7 +131,7 @@ const products = [
         name: "Шкатулка для украшений",
         description: "Изящная шкатулка с несколькими отделениями для хранения украшений.",
         price: 3590,
-        images: ['https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'],
+        images: ['https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'],
         specs: {
             "Материал": "Вишня, бархат",
             "Размер": "25×18×12 см",
@@ -147,7 +147,7 @@ const products = [
         name: "Деревянная подставка для посуды",
         description: "Практичная подставка для сушки посуды из влагостойкого дерева.",
         price: 2790,
-        images: ['https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'],
+        images: ['https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'],
         specs: {
             "Материал": "Бамбук",
             "Размер": "40×30×10 см",
