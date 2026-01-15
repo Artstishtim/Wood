@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лавандовый дом | Эстетичные товары для уюта</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Фон с анимацией -->
+    <div class="background-animation">
+        <div class="floating-element e1"></div>
+        <div class="floating-element e2"></div>
+        <div class="floating-element e3"></div>
+        <div class="floating-element e4"></div>
+    </div>
+
+    <!-- Боковое меню категорий -->
+    <div class="categories-sidebar" id="categoriesSidebar">
+        <div class="categories-content">
+            <h3 class="categories-title">
+                <i class="fas fa-layer-group"></i>
+                Категории
+            </h3>
+            <div class="categories-list">
+                <a href="#all" class="category-item active" data-category="all">
+                    <i class="fas fa-th-large"></i>
+                    <span>Все товары</span>
+                </a>
+                <a href="#boxes" class="category-item" data-category="boxes">
+                    <i class="fas fa-box"></i>
+                    <span>Шкатулки</span>
+                </a>
+                <a href="#kitchen" class="category-item" data-category="kitchen">
+                    <i class="fas fa-utensils"></i>
+                    <span>Кухонная утварь</span>
+                </a>
+                <a href="#decor" class="category-item" data-category="decor">
+                    <i class="fas fa-palette"></i>
+                    <span>Декор</span>
+                </a>
+                <a href="#furniture" class="category-item" data-category="furniture">
+                    <i class="fas fa-chair"></i>
+                    <span>Мебель</span>
+                </a>
+                <a href="#stationery" class="category-item" data-category="stationery">
+                    <i class="fas fa-book"></i>
+                    <span>Канцелярия</span>
+                </a>
+                <a href="#keyholders" class="category-item" data-category="keyholders">
+                    <i class="fas fa-key"></i>
+                    <span>Ключницы</span>
+                </a>
+            </div>
+            
+            <div class="categories-footer">
+                <div class="total-products">
+                    <i class="fas fa-cube"></i>
+                    <span>Товаров: <strong id="productsCount">0</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Шапка -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="#" class="logo">
+                <i class="fas fa-spa"></i>
+                <span class="logo-text">Лавандовый дом</span>
+            </a>
+            
+            <div class="nav-links">
+                <a href="#home" class="nav-link active">Главная</a>
+                <a href="#products" class="nav-link">Каталог</a>
+                <a href="#about" class="nav-link">О нас</a>
+                <a href="#contacts" class="nav-link">Контакты</a>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="action-btn cart-btn" id="cartBtn">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <div class="logo">
+                <i class="fas fa-spa"></i>
+                <span>Лавандовый дом</span>
+            </div>
+            <button class="close-menu" id="closeMenuBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="mobile-menu-links">
+            <a href="#home" class="mobile-nav-link active">Главная</a>
+            <a href="#products" class="mobile-nav-link">Каталог</a>
+            <a href="#about" class="mobile-nav-link">О нас</a>
+            <a href="#contacts" class="mobile-nav-link">Контакты</a>
+        </div>
+    </div>
+
+    <!-- Герой-секция -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">Создайте атмосферу<br>уютного дома</h1>
+                    <p class="hero-subtitle">Эстетичные предметы интерьера, натуральные материалы и ручная работа для создания вашего идеального пространства</p>
+                    <div class="hero-actions">
+                        <a href="#products" class="btn btn-primary">
+                            <i class="fas fa-gem"></i>
+                            Смотреть коллекцию
+                        </a>
+                        <a href="#about" class="btn btn-outline">
+                            <i class="fas fa-heart"></i>
+                            Узнать о нас
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="image-frame">
+                        <div class="image-placeholder">
+                            <i class="fas fa-home"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Преимущества -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Натуральные материалы</h3>
+                    <p>Только экологичные и природные материалы в каждом изделии</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Уникальный дизайн</h3>
+                    <p>Каждый предмет создаётся с любовью и вниманием к деталям</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3>Быстрая доставка</h3>
+                    <p>Доставим ваш заказ в любую точку страны за 3-7 дней</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3>Гарантия качества</h3>
+                    <p>Гарантия на все товары и возврат в течение 14 дней</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Каталог товаров -->
+    <section class="products" id="products">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Наша коллекция</h2>
+                <p class="section-subtitle">Тщательно отобранные предметы для создания уюта</p>
+            </div>
+            
+            <!-- Раздел: Все товары -->
+            <div class="category-section" id="all">
+                <div class="category-header">
+                    <h3 class="category-title">
+                        <i class="fas fa-th-large"></i>
+                        Все товары
+                    </h3>
+                    <span class="category-count" id="allCount">0 товаров</span>
+                </div>
+                <div class="products-grid" id="allProducts">
+                    <!-- Все товары загружаются здесь -->
+                </div>
+            </div>
+            
+            <!-- Раздел: Шкатулки -->
+            <div class="category-section" id="boxes">
+                <div class="category-header">
+                    <h3 class="category-title">
+                        <i class="fas fa-box"></i>
+                        Шкатулки
+                    </h3>
+                    <span class="category-count" id="boxesCount">0 товаров</span>
+                </div>
+                <div class="products-grid category-products" data-category="boxes">
+                    <!-- Товары категории "Шкатулки" -->
+                </div>
+            </div>
+            
+            <!-- Раздел: Кухонная утварь -->
+            <div class="category-section" id="kitchen">
+                <div class="category-header">
+                    <h3 class="category-title">
+                        <i class="fas fa-utensils"></i>
+                        Кухонная утварь
+                    </h3>
+                    <span class="category-count" id="kitchenCount">0 товаров</span>
+                </div>
+                <div class="products-grid category-products" data-category="kitchen">
+                    <!-- Товары категории "Кухонная утварь" -->
+                </div>
+            </div>
+            
+            <!-- Раздел: Декор -->
+            <div class="category-section" id="decor">
+                <div class="category-header">
+                    <h3 class="category-title">
+                        <i class="fas fa-palette"></i>
+                        Декор
+                    </h3>
+                    <span class="category-count" id="decorCount">0 товаров</span>
+                </div>
+                <div class="products-grid category-products" data-category="decor">
+                    <!-- Товары категории "Декор" -->
+                </div>
+            </div>
+            
+            <!-- Раздел: Мебель -->
+            <div class="category-section" id="furniture">
+                <div class="category-header">
+                    <h3 class="category-title">
+                        <i class="fas fa-chair"></i>
+                        Мебель
+                    </h3>
+                    <span class="category-count" id="furnitureCount">0 товаров</span>
+                </div>
+                <div class="products-grid category-products" data-category="furniture">
+                    <!-- Товары категории "Мебель" -->
+                </div>
+            </div>
+            
+            <!-- Раздел: Канцелярия -->
+            <div class="category-section" id="stationery">
+                <div class="category-header">
+                    <h3 class="category-title">
+                        <i class="fas fa-book"></i>
+                        Канцелярия
+                    </h3>
+                    <span class="category-count" id="stationeryCount">0 товаров</span>
+                </div>
+                <div class="products-grid category-products" data-category="stationery">
+                    <!-- Товары категории "Канцелярия" -->
+                </div>
+            </div>
+            
+            <!-- Раздел: Ключницы -->
+            <div class="category-section" id="keyholders">
+                <div class="category-header">
+                    <h3 class="category-title">
+                        <i class="fas fa-key"></i>
+                        Ключницы
+                    </h3>
+                    <span class="category-count" id="keyholdersCount">0 товаров</span>
+                </div>
+                <div class="products-grid category-products" data-category="keyholders">
+                    <!-- Товары категории "Ключницы" -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- О нас -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">Наша философия</h2>
+                    <p>Мы верим, что дом должен быть не просто местом для жизни, а источником вдохновения и уюта. Каждый предмет в нашем магазине создан с мыслью о гармонии, комфорте и красоте.</p>
+                    <p>Наша миссия — помочь вам создать пространство, в котором вы будете чувствовать себя счастливыми и расслабленными. Мы тщательно отбираем каждый товар, уделяя внимание качеству, экологичности и эстетике.</p>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <span class="stat-number">500+</span>
+                            <span class="stat-label">Довольных клиентов</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">3 года</span>
+                            <span class="stat-label">На рынке</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">100%</span>
+                            <span class="stat-label">Натуральные материалы</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="image-composition">
+                        <div class="img-circle img-1"></div>
+                        <div class="img-circle img-2"></div>
+                        <div class="img-circle img-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Корзина (модальное окно) -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-modal-overlay" id="cartOverlay"></div>
+        <div class="cart-modal-content">
+            <div class="cart-header">
+                <h2><i class="fas fa-shopping-bag"></i> Ваша корзина</h2>
+                <button class="close-modal" id="closeCart">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="cart-body" id="cartBody">
+                <!-- Товары в корзине -->
+            </div>
+            
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Итого:</span>
+                    <span class="total-price" id="totalPrice">0 ₽</span>
+                </div>
+                <button class="btn btn-primary btn-checkout" id="checkoutBtn">
+                    <i class="fas fa-credit-card"></i>
+                    Оформить заказ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно товара -->
+    <div class="product-modal" id="productModal">
+        <div class="product-modal-overlay" id="productOverlay"></div>
+        <div class="product-modal-content" id="productModalContent">
+            <!-- Контент загружается динамически -->
+        </div>
+    </div>
+
+    <!-- Форма оформления заказа -->
+    <div class="checkout-modal" id="checkoutModal">
+        <div class="checkout-modal-overlay" id="checkoutOverlay"></div>
+        <div class="checkout-modal-content">
+            <div class="checkout-header">
+                <h2><i class="fas fa-credit-card"></i> Оформление заказа</h2>
+                <button class="close-modal" id="closeCheckout">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="checkout-body">
+                <!-- Скрытая форма для отправки через Formspree -->
+                <form id="orderForm" action="https://formspree.io/f/xeeeolna" method="POST" class="order-form">
+                    <!-- Скрытые поля для данных заказа -->
+                    <input type="hidden" name="_subject" value="Новый заказ с сайта Лавандовый дом">
+                    <input type="hidden" name="_language" value="ru">
+                    <input type="hidden" name="_replyto" id="formEmail">
+                    <input type="hidden" name="order_items" id="orderItems">
+                    <input type="hidden" name="order_total" id="orderTotal">
+                    <input type="hidden" name="order_date" id="orderDate">
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-user"></i> Личные данные</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="name">Имя и фамилия *</label>
+                                <input type="text" id="name" name="name" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Телефон *</label>
+                                <input type="tel" id="phone" name="phone" class="form-input" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-truck"></i> Доставка</h3>
+                        <div class="form-group">
+                            <label for="address">Адрес доставки *</label>
+                            <input type="text" id="address" name="address" class="form-input" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fas fa-sticky-note"></i> Комментарий к заказу</h3>
+                        <div class="form-group">
+                            <textarea id="comments" name="comments" class="form-textarea" rows="3" placeholder="Ваши пожелания..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="order-summary" id="orderSummary">
+                        <!-- Сводка заказа -->
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-submit">
+                        <i class="fas fa-paper-plane"></i>
+                        Отправить заказ
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Контакты -->
+    <section class="contacts" id="contacts">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Свяжитесь с нами</h2>
+                <p class="section-subtitle">Мы всегда рады помочь вам создать уютный дом</p>
+            </div>
+            
+            <div class="contacts-content">
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h3>Телефон</h3>
+                        <p>+7 (999) 123-45-67</p>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3>Email</h3>
+                        <p>hello@lavender-house.ru</p>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3>Адрес</h3>
+                        <p>Москва, ул. Лавандовая, д. 15</p>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Время работы</h3>
+                        <p>Пн-Пт: 10:00-20:00<br>Сб-Вс: 11:00-18:00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-spa"></i>
+                        <span class="logo-text">Лавандовый дом</span>
+                    </div>
+                    <p class="footer-description">
+                        Создаём уютные пространства с 2020 года. Каждый предмет — это история.
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Меню</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Главная</a></li>
+                        <li><a href="#products">Каталог</a></li>
+                        <li><a href="#about">О нас</a></li>
+                        <li><a href="#contacts">Контакты</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Социальные сети</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-pinterest"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-vk"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 Лавандовый дом. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Уведомления -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <!-- Скрипты -->
+    <script src="script.js"></script>
+</body>
+</html>
