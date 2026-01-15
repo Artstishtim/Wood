@@ -745,134 +745,55 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // Обработка отправки формы через Formspree
-orderForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    if (cart.length === 0) {
-        showNotification('Корзина пуста', 'error');
-        return;
-    }
-    
-    // Обновляем email для ответа
-    const emailInput = document.getElementById('email');
-    if (formEmail && emailInput) {
-        formEmail.value = emailInput.value;
-    }
-    
-    // Обновляем дату заказа
-    orderDate.value = new Date().toLocaleString('ru-RU');
-    
-    // Обновляем тему письма
-    const nameInput = document.getElementById('name');
-    const subjectField = document.querySelector('input[name="_subject"]');
-    if (subjectField && nameInput) {
-        subjectField.value = `Новый заказ от ${nameInput.value}`;
-    }
-    
-    const submitBtn = orderForm.querySelector('.btn-submit');
-    const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
-    submitBtn.disabled = true;
-    
-    // ===== ТЕСТОВЫЙ РЕЖИМ (работает локально) =====
-    // Сначала проверим, локально мы или на реальном сервере
-    const isLocalhost = window.location.hostname === 'localhost' || 
-                        window.location.protocol === 'file:';
-    
-    if (isLocalhost) {
-        // ЛОКАЛЬНЫЙ РЕЖИМ - показываем данные
-        console.log('=== ДАННЫЕ ДЛЯ ОТПРАВКИ ===');
-        console.log('Имя:', document.getElementById('name').value);
-        console.log('Email:', document.getElementById('email').value);
-        console.log('Телефон:', document.getElementById('phone').value);
-        console.log('Адрес:', document.getElementById('address').value);
-        console.log('Комментарий:', document.getElementById('comments').value);
-        console.log('Товары:', orderItems.value);
-        console.log('Итого:', orderTotal.value);
-        console.log('============================');
+    // Отправка формы заказа
+    orderForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
         
-        // Имитируем успешную отправку
-        setTimeout(() => {
-            showNotification('ТЕСТ: Заказ успешно отправлен! На реальном хостинге письмо придёт на вашу почту.', 'success');
+        if (cart.length === 0) {
+            showNotification('Корзина пуста', 'error');
+            return;
+        }
+        
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            address: document.getElementById('address').value,
+            comments: document.getElementById('comments').value || 'Нет комментариев',
+            cart: cart,
+            total: cart.reduce((total, item) => total + (item.price * item.quantity), 0),
+            orderDate: new Date().toLocaleString('ru-RU')
+        };
+        
+        const submitBtn = orderForm.querySelector('.btn-submit');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
+        submitBtn.disabled = true;
+        
+        try {
+            const result = await submitOrder(formData);
             
-            // Очищаем корзину
-            cart = [];
-            saveCart();
-            updateCartCount();
-            displayCartItems();
-            
-            // Закрываем модальное окно
-            checkoutModal.classList.remove('active');
-            
-            // Сбрасываем форму
-            orderForm.reset();
-            
-            // Очищаем скрытые поля
-            orderItems.value = '';
-            orderTotal.value = '';
-            orderDate.value = '';
-            
+            if (result.success) {
+                showNotification('Заказ успешно отправлен! Мы свяжемся с вами в течение часа.', 'success');
+                
+                cart = [];
+                saveCart();
+                updateCartCount();
+                displayCartItems();
+                
+                checkoutModal.classList.remove('active');
+                orderForm.reset();
+                
+            } else {
+                showNotification('Ошибка при отправке заказа. Попробуйте позже.', 'error');
+            }
+        } catch (error) {
+            showNotification('Ошибка соединения', 'error');
+        } finally {
             submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
-        }, 1500);
-        
-        return; // Прерываем выполнение
-    }
-    // ===== КОНЕЦ ТЕСТОВОГО РЕЖИМА =====
-    
-    // РЕАЛЬНАЯ ОТПРАВКА (работает на хостинге)
-    // Показываем уведомление об отправке
-    showNotification('Отправляем ваш заказ...', 'success');
-    
-    // Отправляем форму через Formspree
-    fetch(orderForm.action, {
-        method: 'POST',
-        body: new FormData(orderForm),
-        headers: {
-            'Accept': 'application/json'
         }
-    })
-    .then(response => {
-        if (response.ok) {
-            showNotification('Заказ успешно отправлен! Мы свяжемся с вами в течение часа.', 'success');
-            
-            // Очищаем корзину
-            cart = [];
-            saveCart();
-            updateCartCount();
-            displayCartItems();
-            
-            // Закрываем модальное окно
-            checkoutModal.classList.remove('active');
-            
-            // Сбрасываем форму
-            orderForm.reset();
-            
-            // Очищаем скрытые поля
-            orderItems.value = '';
-            orderTotal.value = '';
-            orderDate.value = '';
-            
-        } else {
-            response.json().then(data => {
-                if (data.errors) {
-                    showNotification('Ошибка при отправке: ' + data.errors.map(error => error.message).join(', '), 'error');
-                } else {
-                    showNotification('Ошибка при отправке заказа. Попробуйте позже.', 'error');
-                }
-            });
-        }
-    })
-    .catch(error => {
-        console.error('Ошибка отправки:', error);
-        showNotification('Ошибка соединения с сервером', 'error');
-    })
-    .finally(() => {
-        submitBtn.innerHTML = originalText;
-        submitBtn.disabled = false;
     });
-});
     
     // Плавная прокрутка
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -933,5 +854,4 @@ window.closeProductModal = closeProductModal;
 window.changeMainImage = changeMainImage;
 window.updateQuantity = updateQuantity;
 window.removeFromCart = removeFromCart;
-
 window.scrollToCategory = scrollToCategory;
